@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newcomer training</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h2>コメント一覧</h2>
+    <ul>
+      <li v-for="comment in comments">
+        <!-- v-forによって、コメント一覧(comments)の中のコメントを1つずつ取り出した状態(値にアクセスするには、`comment`を使う)になっています。 -->
+        <!-- (4) コメント(comment)を、 `名前(name): 内容(content)` の形式で表示しましょう -->
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          comments: []
+        }
+      },
+      async mounted() {
+        try {
+          // (1) http://localhost:4000/comments (コメント一覧のWeb API)にGETリクエストして、コメント一覧のレスポンスを取得しましょう (Fetch APIを使います)
+          
+          // (2) レスポンスのボディを取得して、変数に代入しましょう (ボディはJSON形式です)
+          
+          // (3) (2)を data の comments に代入して、Vue.jsのアプリ内でコメント一覧のデータを扱えるようにしましょう
+          
+        } catch (e) {
+          // 実際のアプリケーションでは、Snackbarを表示するなどを行いますが、今回は省略します
+          console.error(e)
+        }
+      }
+    })
+  </script>
+</body>
+</html>

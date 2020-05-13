@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newcomer training</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    {{ greet }}
+    <!-- (2) (1)で用意したnameを表示してみましょう -->
+    {{ name }}
+  </div>
+
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          greet: 'こんにちは！',
+          // (1) name という名前のdataを用意して、自分の名前を入れてください
+          name: '山田太郎'
+        }
+      }
+    })
+  </script>
+</body>
+</html>

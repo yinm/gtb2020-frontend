@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newcomer training</title>
+  <!-- (1) -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <!-- (3) -->
+  <div id="app">
+    {{ greet }}
+  </div>
+
+  <!--　(4) -->
+  <div id="not-vue-js">
+    {{ greet }} 
+  </div>
+
+  <script>
+    // (2)
+    const vm = new Vue({
+      el: '#app',
+      data() {
+        return { greet: 'こんにちは！' }
+      }
+    })
+  </script>
+</body>
+</html>

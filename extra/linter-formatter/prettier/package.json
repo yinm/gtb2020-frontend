@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "npm run lint -- --fix",
+    "formatter": "prettier --write src/**/*.js"
+  },
+  "devDependencies": {
+    "eslint": "^7.0.0",
+    "prettier": "^2.0.5"
+  }
+}

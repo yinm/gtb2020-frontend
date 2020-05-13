@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newcomer training</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    {{ result }}
+  </div>
+
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          result: ''
+        }
+      },
+      // (1)
+      async mounted() {
+        try {
+          const response = await fetch('https://httpbin.org/json')
+
+          if (!response.ok) {
+            console.error('エラーレスポンス', response) 
+            return
+          }
+
+          this.result = await response.json()
+        } catch (e) {
+          console.error(e)
+        }
+      }
+    })
+  </script>
+</body>
+</html>

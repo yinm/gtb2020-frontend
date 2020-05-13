@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newcomer training</title>
+  <style>
+    button {
+      color: #fff;
+      padding: 10px 30px;
+      outline: none;
+      border-radius: 5px;
+    }
+
+    .syncButton {
+      background-color: #ff5252;
+    }
+
+    .asyncButton {
+      background-color: #1867c0;
+    }
+
+    .clickable-area-wrapper {
+      margin-top: 100px;
+    }
+    .clickable-area {
+      width: 500px;
+      height: 500px;
+      background-color: darkgreen;
+      font-size: 2rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="first">
+    <h1>同期・非同期</h1>
+    <button class="syncButton">同期</button>
+    <button class="asyncButton">非同期</button>
+
+    <div class="clickable-area-wrapper">
+      <h2>↓をクリックすると、Consoleにログが出るよ</h2>
+      <div class="clickable-area"></div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelector('.clickable-area').addEventListener('click', () => {
+      console.log('ユーザーの操作(click)を受付ました！')
+    })
+
+    function blockTime(timeout) {
+      const startTime = Date.now();
+      while (true) {
+        const diffTime = Date.now() - startTime;
+        if (diffTime >= timeout) {
+          return;
+        }
+      }
+    }
+    document.querySelector('.syncButton').addEventListener('click', () => {
+      console.log('start')
+      blockTime(1000)
+      console.log('1秒たった')
+      blockTime(2000)
+      console.log('3秒たったので end')
+    })
+
+    async function asyncTime(timeout) { 
+      await new Promise(r => {
+        setTimeout(() => {
+          r();
+        }, 2000);
+      });
+    }
+    document.querySelector('.asyncButton').addEventListener('click', async () => {
+      console.log('async start')
+      await asyncTime(1000)
+      console.log('async 1秒たった')
+      await asyncTime(2000)
+      console.log('async 3秒たったので end')
+    })
+  </script>
+</body>
+</html>

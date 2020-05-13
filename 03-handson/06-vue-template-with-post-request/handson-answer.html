@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newcomer training</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div>
+      <h2>コメント入力</h2>
+      <div>
+        <label for="name">名前</label>
+        <input id="name" type="text" v-model="name">
+      </div>
+    
+      <div>
+        <label for="name">内容</label>
+        <input id="content" type="text" v-model="content">
+      </div>
+    
+      <button @click="createComment">投稿する</button>
+    </div>
+
+    <h2>コメント一覧</h2>
+    <ul>
+      <li v-for="comment in comments">
+        {{ comment.name }}: {{ comment.content }}
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    const app = new Vue({
+      el: '#app',
+
+      data() {
+        return {
+          name: '',
+          content: '',
+          comments: []
+        }
+      },
+
+      async mounted() {
+        try {
+          this.comments = await this.getComments()
+        } catch (e) {
+          console.error(e)
+        }
+      },
+
+      methods: {
+        // コメント一覧の取得をメソッドとして抽出したものです
+        // 以下のタイミングで同じ処理をしたいので、使いまわせるようにしました
+        // - ページにアクセスした時
+        // - コメント投稿後
+        async getComments() {
+          const response = await fetch('http://localhost:4000/comments')
+
+          if (!response.ok) {
+            console.error('エラーレスポンス', response) 
+            return
+          }
+
+          return response.json()
+        },
+
+        async createComment() {
+          // (1) 画面上の入力内容(name, content)で、requestBodyを作りましょう
+          const requestBody = {
+            comment: {
+              name: this.name,
+              content: this.content
+            }
+          }
+
+          try {
+            // (2) http://localhost:4000/comments (コメント一覧のWeb API)にPOSTリクエストして、コメント一覧に新しいコメントを投稿しましょう (Fetch APIを使います)
+            const response = await fetch('http://localhost:4000/comments', {
+              method: 'POST',
+              body: JSON.stringify(requestBody),
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            })
+
+            if (!response.ok) {
+              console.error('エラーレスポンス', response)
+              return
+            }
+
+            // (3) 画面上の入力内容を空文字列で初期化してください (次のコメントを入力するときに前回の内容を残らないようにしたいため)
+            this.name = ''
+            this.content = ''
+
+            // (4) コメント追加後のコメント一覧を画面に表示するために、Web APIからコメント一覧を取得して、 this.comments に代入しましょう (this.getComments() を使います)
+            this.comments = await this.getComments()
+          } catch (error) {
+            console.log('例外をキャッチしたよ！')
+            console.error(error)
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>
+

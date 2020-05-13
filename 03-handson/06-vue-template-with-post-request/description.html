@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newcomer training</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div>
+      <h2>コメント入力</h2>
+      <div>
+        <label for="name">名前</label>
+        <input id="name" type="text" v-model="name">
+      </div>
+    
+      <div>
+        <label for="name">内容</label>
+        <input id="content" type="text" v-model="content">
+      </div>
+    
+      <button @click="createComment">投稿する</button>
+    </div>
+
+    <h2>コメント一覧</h2>
+    <ul>
+      <li v-for="comment in comments">
+        {{ comment.name }}: {{ comment.content }}
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    const app = new Vue({
+      el: '#app',
+
+      data() {
+        return {
+          name: '',
+          content: '',
+          comments: []
+        }
+      },
+
+      async mounted() {
+        try {
+          const response = await fetch('http://localhost:4000/comments')
+          const comments = await response.json()
+          this.comments = comments
+        } catch (e) {
+          console.error(e)
+        }
+      },
+
+      methods: {
+        // (1)
+        async createComment() {
+          const requestBody = {
+            comment: {
+              name: this.name,
+              content: this.content
+            }
+          }
+
+          try {
+            const response = await fetch('http://localhost:4000/comments', {
+              method: 'POST',
+              body: JSON.stringify(requestBody),
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            })
+
+            if (!response.ok) {
+              console.error('エラーレスポンス', response)
+              return
+            }
+
+            this.name = ''
+            this.content = ''
+
+            console.log(await response.json())
+          } catch (error) {
+            console.log('例外をキャッチしたよ！')
+            console.error(error)
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>

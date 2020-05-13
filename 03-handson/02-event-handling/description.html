@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newcomer training</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div>
+      <div>
+        <label for="name">名前</label>
+        <!-- (2) -->
+        <input id="name" type="text" v-model="name">
+        <span>nameの入力値: {{ name }}</span> <!-- (変更しないでください！) デバッグ用 -->
+      </div>
+    
+      <!-- (4) -->
+      <button @click="createComment">投稿する</button>
+    </div>
+
+    <ul>
+      <!-- (6) -->
+      <li v-for="comment in comments">
+        {{ comment.name }}
+      </li>
+    </ul>
+
+    <!-- 説明・デバッグ用 -->
+    <hr>
+    <div>
+      <label for="name">名前</label>
+      <!-- (3) -->
+      <input id="name" type="text" v-model="vModelExample">
+      <span>nameの入力値: {{ vModelExample }}</span> <!-- (変更しないでください！) デバッグ用 -->
+    </div>
+
+    <div>
+      <p>commentsの値</p>
+      {{ comments }}
+    </div>
+  </div>
+
+  <script>
+    const app = new Vue({
+      el: '#app',
+      // (1)
+      data() {
+        return {
+          comments: [],
+          name: '',
+          // 説明用
+          vModelExample: 'two-way data binding'
+        }
+      },
+
+      // (5)
+      methods: {
+        createComment() {
+          this.comments.push({
+            name: this.name,
+          })
+
+          this.name = ''
+        }
+      }
+    })
+  </script>
+</body>
+</html>

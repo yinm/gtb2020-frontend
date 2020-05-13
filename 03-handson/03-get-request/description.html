@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newcomer training</title>
+</head>
+<body>
+  <div>
+    <p>Consoleに結果を出力しています。DevToolsで見てみましょう。</p>
+    <p>
+      <a href="https://developers.google.com/web/tools/chrome-devtools/shortcuts?hl=ja" target="_blank" rel="noopener noreferrer">
+        ChromeのDevToolsの開き方
+      </a>
+    </p>
+    <dl>
+      <dt>Mac</dt>
+      <dd>cmdキー + optionキー + jキー</dd>
+      <dt>Windows</dt>
+      <dd>F12</dd>
+    </dl>
+  </div>
+
+  <script>
+  async function getRequest() {
+    // (1)
+    const response = await fetch('https://httpbin.org/json')
+    console.log(response)
+
+    // (2)
+    const jsObject = await response.json()
+    console.log(jsObject)
+    console.log(jsObject.slideshow.author)
+  }
+
+  getRequest()
+  </script>
+</body>
+</html>

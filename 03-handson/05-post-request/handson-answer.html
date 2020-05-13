@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newcomer training</title>
+</head>
+<body>
+  <div>
+    <p>Consoleに結果を出力しています。DevToolsで見てみましょう。</p>
+    <p>
+      <a href="https://developers.google.com/web/tools/chrome-devtools/shortcuts?hl=ja" target="_blank" rel="noopener noreferrer">
+        ChromeのDevToolsの開き方
+      </a>
+    </p>
+    <dl>
+      <dt>Mac</dt>
+      <dd>cmdキー + optionキー + jキー</dd>
+      <dt>Windows</dt>
+      <dd>F12</dd>
+    </dl>
+  </div>
+
+  <script>
+  async function postRequest() {
+    // (1) コメントの投稿(http://localhost:4000/spec/#/paths/~1comments/post)ができるように、requestBodyを作りましょう
+    // 
+    // なお、name と content には以下の値を入れてください。
+    // nameには、 自分の名前
+    // contentには、 'POSTリクエスト完全に理解した！'
+    const requestBody = {
+      comment: {
+        name: 'yinm',
+        content: 'POSTリクエスト完全に理解した！'
+      }
+    }
+
+    try {
+      // (2) http://localhost:4000/comments (コメント一覧のWeb API)にPOSTリクエストして、コメント一覧に新しいコメントを投稿しましょう (Fetch APIを使います)
+      const response = await fetch('http://localhost:4000/comments', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (!response.ok) {
+        console.error('エラーレスポンス', response) 
+        return
+      }
+
+      // (3) レスポンスのボディを取得して、変数に代入しましょう (ボディはJSON形式です)
+      const comment = await response.json()
+
+      // (4) レスポンスの結果を、 console.log() で表示してみましょう
+      console.log(comment)
+    } catch (error) {
+      console.log('例外をキャッチしたよ！')
+      console.error(error)
+    }
+  }
+
+  postRequest()
+  </script>
+</body>
+</html>

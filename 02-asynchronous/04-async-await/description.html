@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newcomer training</title>
+</head>
+<body>
+  <div class="first">
+    <h1>async/await</h1>
+
+    <div>
+      <p>Consoleに結果を出力しています。DevToolsで見てみましょう。</p>
+      <p>
+        <a href="https://developers.google.com/web/tools/chrome-devtools/shortcuts?hl=ja" target="_blank" rel="noopener noreferrer">
+          ChromeのDevToolsの開き方
+        </a>
+      </p>
+      <dl>
+        <dt>Mac</dt>
+        <dd>cmdキー + optionキー + jキー</dd>
+        <dt>Windows</dt>
+        <dd>F12</dd>
+      </dl>
+    </div>
+  </div>
+
+  <script>
+    // サーバーに非同期処理でリクエストして、ファイルの内容を取得する処理(をシミュレートしていると思ってください...！)
+    async function getFileText(fileName) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          // ファイルの内容を取得していると思ってください...！
+          const content = fileName + 'の内容' 
+          resolve(content)
+        }, 1000);
+      })
+    }
+
+    // 4つのファイルの内容を取得して、それぞれの1文字目を合わせる処理
+    async function firstChars() {
+      const a = await getFileText('a.txt')
+      console.log(a)
+      const aChar = a.slice(0, 1)
+
+      const b = await getFileText('b.md')
+      console.log(b)
+      const bChar = b.slice(0, 1)
+
+      const c = await getFileText('c.json')
+      console.log(c)
+      const cChar = c.slice(0, 1)
+
+      const d = await getFileText('d.yaml')
+      console.log(d)
+      const dChar = d.slice(0, 1)
+
+      console.log('それぞれのファイルの1文字目を合わせると、', aChar, bChar, cChar, dChar)
+    }
+
+    firstChars()
+  </script>
+</body>
+</html>

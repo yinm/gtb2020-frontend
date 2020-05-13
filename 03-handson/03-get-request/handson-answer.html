@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newcomer training</title>
+</head>
+<body>
+  <div>
+    <p>Consoleに結果を出力しています。DevToolsで見てみましょう。</p>
+    <p>
+      <a href="https://developers.google.com/web/tools/chrome-devtools/shortcuts?hl=ja" target="_blank" rel="noopener noreferrer">
+        ChromeのDevToolsの開き方
+      </a>
+    </p>
+    <dl>
+      <dt>Mac</dt>
+      <dd>cmdキー + optionキー + jキー</dd>
+      <dt>Windows</dt>
+      <dd>F12</dd>
+    </dl>
+  </div>
+
+  <script>
+  async function getRequest() {
+    try {
+      // (1) http://localhost:4000/comments (コメント一覧のWeb API)にGETリクエストして、コメント一覧のレスポンスを取得しましょう (Fetch APIを使います)
+      const response = await fetch('http://localhost:4000/comments')
+
+      if (!response.ok) {
+        console.error('エラーレスポンス', response) 
+        return
+      }
+
+      // (2) レスポンスのボディを取得して、変数に代入しましょう (ボディはJSON形式です)
+      const comments = await response.json()
+      // (3) レスポンスの結果を、 console.log() で表示してみましょう
+      console.log(comments)
+    } catch (error) {
+      console.log('例外をキャッチしたよ！')
+      console.error(error)
+    }
+  }
+
+  getRequest()
+  </script>
+</body>
+</html>

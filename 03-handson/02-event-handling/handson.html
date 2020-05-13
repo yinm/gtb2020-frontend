@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newcomer training</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div>
+      <div>
+        <label for="name">名前</label>
+        <input id="name" type="text" v-model="name">
+        <span>nameの入力値: {{ name }}</span> <!-- (変更しないでください！) デバッグ用 -->
+      </div>
+    
+      <div>
+        <label for="name">内容</label>
+        <!-- (2) (1)で用意した content と入力値を紐付け(binding)してください -->
+        <span>contentの入力値: {{ content }}</span> <!-- (変更しないでください！) デバッグ用 -->
+      </div>
+    
+      <button @click="createComment">投稿する</button>
+    </div>
+
+    <ul>
+      <li v-for="comment in comments">
+        <!-- (4) (1)で用意した content を、nameの後に表示してください -->
+        {{ comment.name }}: 
+      </li>
+    </ul>
+
+    <!-- デバッグ用 -->
+    <hr>
+    <div>
+      <p>commentsの値</p>
+      {{ comments }}
+    </div>
+  </div>
+
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          comments: [],
+          name: '',
+          // (1) content という名前のdataを用意して、初期値を空文字列('')にしてください
+        }
+      },
+
+      methods: {
+        createComment() {
+          this.comments.push({
+            name: this.name,
+            // (3) content も this.comments に格納できるようにしてください
+          })
+
+          this.name = ''
+          // (5) content の値を空文字列で初期化してください (次のコメントを入力するときに前回の内容を残らないようにしたいため)
+        }
+      }
+    })
+  </script>
+</body>
+</html>

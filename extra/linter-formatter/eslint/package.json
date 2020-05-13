@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "lint": "eslint src/**/*.js",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "devDependencies": {
+    "eslint": "^7.0.0"
+  }
+}

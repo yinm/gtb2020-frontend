@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newcomer training</title>
+</head>
+<body>
+  <div class="first">
+    <h1>Callback</h1>
+
+    <div>
+      <p>Consoleに結果を出力しています。DevToolsで見てみましょう。</p>
+      <p>
+        <a href="https://developers.google.com/web/tools/chrome-devtools/shortcuts?hl=ja" target="_blank" rel="noopener noreferrer">
+          ChromeのDevToolsの開き方
+        </a>
+      </p>
+      <dl>
+        <dt>Mac</dt>
+        <dd>cmdキー + optionキー + jキー</dd>
+        <dt>Windows</dt>
+        <dd>F12</dd>
+      </dl>
+    </div>
+  </div>
+
+  <script>
+    // サーバーに非同期処理でリクエストして、ファイルの内容を取得する処理(をシミュレートしていると思ってください...！)
+    function getFileText(fileName, callback) {
+      setTimeout(() => {
+        // ファイルの内容を取得していると思ってください...！
+        const content = fileName + 'の内容' 
+        callback(content)
+      }, 1000);
+    }
+
+    // 4つのファイルの内容を取得して、それぞれの1文字目を合わせる処理
+    // callbackが続くと、ネストが深くなって読みにくくなる(Callback Hell)
+    getFileText('a.txt', function(a) {
+      console.log(a)
+      aChar = a.slice(0, 1)
+
+      getFileText('b.md', function(b) {
+        console.log(b)
+        bChar = b.slice(0, 1)
+
+        getFileText('c.json', function(c) {
+          console.log(c)
+          cChar = c.slice(0, 1)
+
+          getFileText('d.yaml', function(d) {
+            console.log(d)
+            dChar = d.slice(0, 1)
+
+            console.log('それぞれのファイルの1文字目を合わせると、', aChar, bChar, cChar, dChar)
+          })
+        })
+      })
+    })
+  </script>
+</body>
+</html>
